@@ -1,0 +1,7 @@
+dem mas 
+
+%p=floor(I*10^6);
+%p=p*(10^-6);
+%et=abs((Iv-p)/Iv)*100;
+
+%fprintf('\n El et sera : %2.6f \n',et)
