@@ -1,0 +1,23 @@
+function [x,y,k1,k2,k3,k4]=Rungekutta4(f,x,y,n,h)
+ym=zeros(1,n);
+ye=zeros(1,n);
+slope=zeros(1,n);
+[k1]=DeriRungekutta4(f,x,y);
+for i=1:n
+    ym(i)=y(i)+k1(i)*h/2;
+end
+[k2]=DeriRungekutta4(f,x+h/2,ym);
+for i=1:n
+    ym(i)=y(i)+k2(i)*h/2;
+end
+[k3]=DeriRungekutta4(f,x+h/2,ym);
+for i=1:n
+    ye(i)=y(i)+k3*h;
+end
+[k4]=DeriRungekutta4(f,x+h,ye);
+for i=1:n
+    slope(i)=(k1(i)+2*(k2(i)+k3(i))+k4(i))/6;
+    y(i)=y(i)+slope(i)*h;
+end
+x=x+h;
+end

@@ -1,0 +1,4 @@
+function dydx = derivs(f,x,y)
+f=inline(f);
+dydx=f(x,y);
+end

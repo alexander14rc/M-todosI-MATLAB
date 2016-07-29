@@ -1,0 +1,4 @@
+function [ x y ] = integrator( f,x,y,h )
+[x ynew ] =euler(f,x,y,h);
+y=ynew;
+end

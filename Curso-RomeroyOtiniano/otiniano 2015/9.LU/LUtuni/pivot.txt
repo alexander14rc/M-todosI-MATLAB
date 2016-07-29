@@ -1,0 +1,15 @@
+function [a,s,o]=pivot(a,n,s,o,k)
+p=k;
+big=abs(a(o(k),k)/s(o(k)));
+for z=k+1:n
+    t=abs(a(o(z),k)/s(o(z)));
+    if t>big
+        big=t;
+        p=z;
+    end
+    
+end
+t=o(p);
+o(p)=o(k);
+o(k)=t;
+end

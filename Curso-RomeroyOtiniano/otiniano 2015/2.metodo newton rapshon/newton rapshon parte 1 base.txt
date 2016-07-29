@@ -1,0 +1,44 @@
+clear all
+clc
+fprintf('=================================');
+fprintf('\n   METODO DE NEWTON RAPSHON  \n');
+fprintf('=================================\n');
+syms x ;
+format long
+fun=input('ingrese la funcion f(x): ','s');
+fprintf('\n');
+derivada=diff(sym(fun)); %derivada simbolica de f
+x0=input('ingrese un valor inicial: ');
+Eps=input('ingrese el criterio de convergencia(error fijado): ');
+Eps1=input('ingrese el criterio de exactitud: ');
+imax=input('ingrese el numero maximo de iteraciones: ');
+I=1;
+f=inline(fun);
+df=inline(derivada);
+while I<imax
+
+x=x0-f(x0)/df(x0);
+Ea=abs(x-x0);
+
+if abs(x-x0)<Eps
+    fprintf('\n la raiz es: %6.8f\n',x)
+break
+elseif abs(f(x))<Eps1
+    fprintf('\n la raiz es: %6.8f\n',x)
+
+break
+end
+
+I=I+1;
+x0=x; 
+
+
+
+end
+if I>=imax
+fprintf('\n el metodo no converge a una raiz \n')
+break
+end
+
+fprintf('\n el numero de iteraciones es:%2.0f \n',I)
+fprintf('\n el Ea es:%2.8f \n',Ea)

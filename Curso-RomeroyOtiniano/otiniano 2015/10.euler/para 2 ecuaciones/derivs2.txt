@@ -1,0 +1,6 @@
+function [dydx dydx2]=derivs2(f,f2,x,y,y2)
+f=inline(f);
+f2=inline(f2);
+dydx=f(x,y);
+dydx2=f2(x,y,y2);
+end

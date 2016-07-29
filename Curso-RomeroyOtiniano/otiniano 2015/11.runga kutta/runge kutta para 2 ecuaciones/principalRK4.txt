@@ -1,0 +1,53 @@
+clear all
+clc
+disp('====================================')
+disp('Runge kutta 4 orden para 2 ecuaciones')
+disp('====================================')
+
+
+EDO1='Y1*X^2-1.2*Y1';%input('ingrese la EDO1:','s');
+syms X Y1 Y2
+EDO1=inline(EDO1);
+
+EDO2='(1+X)*Y1^0.5+Y2*0';%input('ingrese la EDO2:','s');
+syms X Y1 Y2
+EDO2=inline(EDO2);
+
+n=2; %input('Numero de ecuaciones, "n": ');
+Yo=[1 1]; %input('Valores iniciales de n variables dependientes, "Yo": ');
+Xo=0; %input('Valor inicial de independiente, "Xo": ');
+Xf=4; %input('Valor final de independiente, "Xf": ');
+dX=0.5; %input('Tamaño de paso, "dX": ');
+Xout=0.5; %input('Intervalo de salida: ');
+
+X=Xo;
+m=1;
+Xp(m)=X;
+
+fprintf('\n \t X \t  \t  \tY1\t \t \tY2\t|');
+
+for i=1:n
+    Yp(i,m)=Yo(i);
+    Y(i)=Yo(i);
+end
+while X < Xf
+    if m==1
+        Xend=X;
+    else
+        Xend= X+Xout;
+    end
+    if Xend > Xf
+        Xend = Xf;
+    end
+    h=dX;
+    [X,Y]=WIntegrator(X,Y,n,h,Xend,EDO1,EDO2);
+    m=m+1;
+    Xp(m)=X;
+    
+    for i=1:n
+        Yp(i,m)=Y(i);
+    end
+    fprintf('\n     %1.2f   \t%2.4f   \t%2.4f',Xp(m) , Yp(1,m), Yp(2,m))
+end
+%display results
+fprintf('\n')

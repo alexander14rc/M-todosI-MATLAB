@@ -1,0 +1,52 @@
+clear all
+clc
+x=input('X: ');
+y=input('Y: ');
+xi=input('ingrese valor a interpolar: ');
+n=length(x);
+fdd=zeros(n);
+fdd(:,1)=y(:);      
+for j=2:n
+    for i=1:n-j+1
+        fdd(i,j)=(fdd(i+1,j-1)-fdd(i,j-1))/(x(i+j-1)-x(i));
+    end
+end
+xt=1;
+yint=zeros(1,n);
+yint(1)=fdd(1,1);
+Ea=zeros(1,n);
+fprintf('\ni      yint(i)       Ea(i)      x        f(x) \n');
+for z=1:n-1
+    xt=xt*(xi-x(z));
+    yint2=yint(z)+fdd(1,z+1)*xt;
+    Ea(z)=yint2-yint(z);
+    yint(z+1)=yint2;
+end
+for z=1:n
+ fprintf('%i %12.5f %12.6f %6.2f %12.5f\n',z,yint(z),Ea(z),x(z),y(z))
+end
+p=num2str(fdd(1,1));
+for j=2:n
+    signo='';
+    if fdd(1,j)>=0
+        signo='+';
+    end
+    xt1='';
+    for i=1:j-1
+        signo2='';
+        if x(i)<0
+            signo2='+';
+        end
+           xt1=strcat(xt1,'*(x',signo2,num2str(-x(i)),')');
+    end
+    p=strcat(p,signo,num2str(fdd(1,j)),xt1);
+end
+p=inline(p);
+Rn=fdd(1,n);
+for i=1:n-1
+    Rn=Rn*(xi-x(i));
+end
+fprintf('error de truncamiento: %8.8f\n',Rn);
+fprintf('valor aproximado: %8.8f\n',yint(n));
+fprintf('\nla funcion es :\n');
+disp(p)

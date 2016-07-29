@@ -1,0 +1,8 @@
+function [x,y]=IntegratorRungekutta4(f,x,y,n,h,xend)
+while x<xend
+    if (xend-x)<h
+        h=xend-x;
+    end
+    [x,y]=Rungekutta4(f,x,y,n,h);
+end
+end

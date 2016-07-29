@@ -1,0 +1,63 @@
+clc 
+close all
+disp('======================================')
+disp('           Menu de Integracion        ')
+disp('======================================')
+         
+fprintf('Escoge el metodo de Integracion\n');
+fprintf('1.Trapecio\n');
+fprintf('2.Simpson 1/3\n');
+fprintf('3.Simpson 3/8\n');
+fprintf('4.Romberg \n');
+op=input('Escoger opcion:');
+while (op~=1)&(op~=2)&(op~=3)&(op~=4)
+    op=input(' Escoger nuevamente la opcion 1 ,2,3 o 4: ');
+end
+if op==1
+          disp('======================================')
+          disp( '    Escogio metodo  trapecio         ')
+          disp('======================================')
+           f=input('ingrese  la funcion: ');
+          a=input('ingrese  el limite inferior: ');
+          b=input('ingrese  el limite superior: ');
+          n=input('ingrese  el numero de segmentos: ');
+          p=trapezoide(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+elseif op==2
+          disp('======================================')
+         disp('       Escogio metodo simpson 1/3   ')
+         disp('======================================')
+          f=input('ingrese  la funcion: ');
+          a=input('ingrese  el limite inferior: ');
+          b=input('ingrese  el limite superior: ');
+          n=input('ingrese  el numero de segmentos: '); 
+         p=simpson3(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+elseif op==3
+          disp('======================================')
+         disp('        Escogio metodo simpson 3/8     ')
+         disp('======================================')
+          f=input('ingrese  la funcion: ');
+          a=input('ingrese  el limite inferior: ');
+          b=input('ingrese  el limite superior: ');
+          n=input('ingrese  el numero de segmentos: '); 
+         p=simpson8(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+elseif op==4
+          disp('======================================')
+         disp('        Escogio metodo romberg     ')
+         disp('======================================')
+         f=input('ingrese  la funcion: ');
+              a=input('ingrese  el limite inferior: ');
+          b=input('ingrese  el limite superior: ');
+         imax=input('ingrese la iteracion maxima:');
+         es=input('ingrese el error fijado:');
+          p=romberg(f,a,b,imax,es);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+          
+
+end

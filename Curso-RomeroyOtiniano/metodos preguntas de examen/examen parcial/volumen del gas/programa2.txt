@@ -1,0 +1,66 @@
+clear all
+clc
+f=input('ingrese la funcion: ');
+es=input('ingrese el error fijado:');
+imax=input('ingrese el numeromaximo de iteraciones:');
+xl=input('Ingresar valor inferior xl= ');%12
+xu=input('Ingresar Valor superior xu= ');%16
+derivada=diff(sym(f));
+f=inline(f);
+iter=1;
+ea=1;
+xr=0;
+fprintf('\n iterando por metodo de biseccion \n')
+fprintf('\n  iter       xl         xu          xr           ea  \n')
+while (iter<=imax)&&(ea>es)
+xrold=xr;
+xr=(xl+xu)/2;
+
+if xr~=0
+ea=abs(((xr-xrold)/xr)*100);
+end
+fprintf('\n %2.0f \t %5.6f \t %5.6f \t %5.6f \t%5.6f \n ',iter,xl,xu,xr,ea)
+iter=iter+1;
+    R=f(xl)*f(xr);
+
+if R<0
+xu=xr;
+elseif R>0
+xl=xr;
+else
+ea=0;
+
+end
+if iter==3
+break
+end
+end
+fprintf('\n ahora iterando por metodo de newton raphson \n')
+x0=xr;
+Eps=es;
+syms x ;
+format long
+df=inline(derivada);
+fprintf (' \n  iter      x          f(x)            Ea \n ')
+while iter<imax
+
+x=x0-f(x0)/df(x0);
+Ea=abs(x-x0);
+fprintf (' \n %2.0f \t%2.6f\t %2.6f\t %2.6f \n',iter,x,f(x),Ea)
+if abs(x-x0)<Eps
+fprintf('\n la raiz es: %6.8f\n',x)
+
+break
+
+end
+
+iter=iter+1;
+x0=x; 
+
+
+end
+if iter>=imax
+fprintf('\n el metodo no converge a una raiz \n')
+break
+end
+

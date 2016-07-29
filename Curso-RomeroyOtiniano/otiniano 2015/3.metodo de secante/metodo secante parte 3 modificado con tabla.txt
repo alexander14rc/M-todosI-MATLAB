@@ -1,0 +1,38 @@
+clear all
+clc
+disp('====================================')
+disp('        METODO DE LA SECANTE        ')
+disp('====================================')
+f=input('ingrese funcion :','s');
+x0=input('ingrese valor inicial x0 :');
+x1=input('ingrese valor inicial x1 :');
+Eps=input('ingrese el criterio de convergencia Eps :');
+Eps1=input('ingrese el criterio de exactitud Eps1 :');
+imax=input('ingrese imax :');
+f=inline(f);
+I=1;
+fprintf (' \n  I          x              f(x)                Ea \n ')
+while I<imax
+    x=x1-(f(x1)*(x0-x1))/(f(x0)-f(x1));
+    Ea=abs(x-x1);
+    fprintf (' \n %2.0f \t%2.8f\t %2.17f\t %2.12f \n',I,x,f(x),Ea)
+    if abs(x-x1)<Eps
+        fprintf('\n ------>  la raiz obtenida es :%5.8f \n',x)
+        fprintf('\n ------> el  criterio es por convergencia \n')
+        break
+    elseif abs(f(x))<Eps1
+        fprintf('\n ------>  la raiz obtenida es :%5.8f \n',x)
+         fprintf('\n ------> el  criterio es por exactitud \n')
+       break
+    end
+    
+    I=I+1;
+    x0=x1;
+    x1=x;
+end
+if I>=imax
+fprintf('\n el metodo no converge a una raiz \n')
+break
+end
+ fprintf('\n ------> el Ea es :%5.10f \n',Ea)
+ fprintf('\n ------> numero de iteraciones es :%3.0f \n',I)

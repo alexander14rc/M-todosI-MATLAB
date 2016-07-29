@@ -1,0 +1,34 @@
+function [N,Ea,iter,crit] = newtonrapshon( f,x0,Eps,Eps1,imax )
+%[N,Ea,iter,mod]=newtonrapshon( 'exp(-x)-x',0,0.0001,0.0001,20 )
+syms x ;    
+format long
+derivada=diff(sym(f)); %derivada simbolica de f
+I=1;
+f=inline(f);
+df=inline(derivada);
+while I<imax
+
+x=x0-f(x0)/df(x0);
+Ea=abs(x-x0);
+
+if abs(x-x0)<Eps
+    crit='metodo por convergencia';
+break
+elseif abs(f(x))<Eps1
+        crit='metodo por exactitud';
+break
+end
+
+I=I+1;
+x0=x; 
+
+end
+if I>=imax
+crit=' el metodo no converge a una raiz ';
+end
+
+
+N=x;
+iter=I;
+end
+

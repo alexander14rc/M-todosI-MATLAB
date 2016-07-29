@@ -1,0 +1,40 @@
+clc 
+close all
+disp('======================================')
+disp('           Menu de Integracion        ')
+disp('======================================')
+          f=input('ingrese  la funcion: ');
+          a=input('ingrese  el limite inferior: ');
+          b=input('ingrese  el limite superior: ');
+          n=input('ingrese  el numero de segmentos: ');
+fprintf('Escoge el metodo de Integracion\n');
+fprintf('1.Trapecio\n');
+fprintf('2.Simpson 1/3\n');
+fprintf('3.Simpson 3/8\n');
+op=input('Escoger opcion:');
+while (op~=1)&(op~=2)&(op~=3)
+    op=input(' Escoger nuevamente la opcion 1 ,2 o 3: ');
+end
+if op==1
+          disp('======================================')
+          disp( '    Escogio metodo  trapecio         ')
+          disp('======================================')
+          p=trapezoide(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+elseif op==2
+          disp('======================================')
+         disp('       Escogio metodo simpson 1/3   ')
+         disp('======================================')
+          p=simpson3(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+elseif op==3
+          disp('======================================')
+         disp('        Escogio metodo simpson 3/8     ')
+         disp('======================================')
+          p=simpson8(f,a,b,n);
+          fprintf('\n')
+          fprintf('la integral es: %f \n',p);
+
+end

@@ -1,0 +1,40 @@
+clear all
+clc
+disp('====================================')
+disp('       eliminacion gauss simple     ')
+disp('====================================')
+format 
+a=input('ingrese matriz a: ');
+b=input('ingrese matriz b: ');
+n=length(b);
+u=1;
+for k=1:n-1
+for i=k+1:n
+    f(u)=a(i,k)/a(k,k);
+    for j=1:n
+        a(i,j)=a(i,j)-f(u)*a(k,j);
+    end
+    b(i)=b(i)-f(u)*b(k);
+    u=u+1;
+end
+end
+x(n)=b(n)/a(n,n);
+     for i=n-1:-1:1
+        sum=0;
+       for j=i+1:n
+        sum=sum+a(i,j)*x(j);
+       end
+           x(i)=(b(i)-sum)/a(i,i);
+     end
+     fprintf('\n')
+  disp('la matriz triangular superior es ')
+   fprintf('\n')
+  disp(a)
+   fprintf('\n')
+ disp('el b modificado  es ')
+  fprintf('\n')
+ disp(b)
+  fprintf('\n')
+ disp('los incognitas son ')
+  fprintf('\n')
+ disp(x)   

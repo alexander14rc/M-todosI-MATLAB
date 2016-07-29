@@ -1,0 +1,5 @@
+function [ x y y2 ] = integrator2( f,f2,x,y,y2,h )
+[x ynew  ynew2] =euler2(f,f2,x,y,y2,h);
+y=ynew;
+y2=ynew2;
+end

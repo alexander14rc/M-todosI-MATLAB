@@ -1,0 +1,11 @@
+function [a,b,x]=LU(a,b,tol)
+n=length(b);
+er=0;
+s=zeros(1,n);
+o=zeros(1,n);
+[a,s,o,er]=decompose(a,n,tol,s,o,er);
+if er~=-1
+[x,b,a]=substitute1(a,b,n,o);
+end
+
+end

@@ -1,0 +1,5 @@
+function [k]=DeriRungekutta4(f,x,y)
+k=f(x,y);
+end
+
+

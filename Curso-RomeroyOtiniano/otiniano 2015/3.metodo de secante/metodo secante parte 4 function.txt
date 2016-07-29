@@ -1,0 +1,29 @@
+function [raiz,iter,Ea,criterio] = metodosecante( f,x0,x1,Eps,Eps1,imax )
+%[raiz,iter,Ea,crit]=metodosecante( 'exp(-x)-x',0,1,0.0001,0.0001,20 )
+format long
+f=inline(f);
+I=1;
+while I<imax
+    x=x1-(f(x1)*(x0-x1))/(f(x0)-f(x1));
+    Ea=abs(x-x1);
+    if abs(x-x1)<Eps
+        
+        criterio='el criterio es por convergencia';
+        break
+    elseif abs(f(x))<Eps1
+        
+         criterio='el criterio es por exactitud';
+       break
+    end
+    
+    I=I+1;
+    x0=x1;
+    x1=x;
+end
+if I>=imax
+criterio='el metodo no converge a una raiz';
+end
+
+raiz=x;
+iter=I;
+end

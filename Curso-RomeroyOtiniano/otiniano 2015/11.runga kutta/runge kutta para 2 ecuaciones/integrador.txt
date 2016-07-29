@@ -1,0 +1,10 @@
+function [X,Y]=WIntegrator(X,Y,n,h,Xend,EDO1,EDO2)
+while X < Xend
+    %disp('XD')
+    if (Xend - X)<h %para el ultiomo segmento
+        h = Xend - X;
+    end
+    %disp('XD')
+    %disp(X)
+    [X,Y]=WRK4(X,Y,n,h,EDO1,EDO2);
+end

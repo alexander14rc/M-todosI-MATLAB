@@ -1,0 +1,19 @@
+clear all
+clc
+f=input('ingrese la edo: Dy/Dx=','s');
+y=input('ingrese el valor inicial de la variable dependiente:');
+xi=input('ingrese el valor inicial de la variable independiente:');
+xf=input('ingrese el valor final de la variable independiente:');
+dx=input('ingrese el tamaño de paso:');
+x=xi;
+m=0;
+
+fprintf('\n X     Yeuler    \n')
+fprintf('\n %3.5f %10.5f   \n ',x,y)
+while (x<xf);
+    h=dx;
+    [ x y ] = integrator( f,x,y,h );
+    m=m+1;
+    
+    fprintf('\n %3.5f %10.5f  \n ',x,y)
+end

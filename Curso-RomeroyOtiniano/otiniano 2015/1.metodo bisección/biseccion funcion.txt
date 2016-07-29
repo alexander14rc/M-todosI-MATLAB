@@ -1,0 +1,27 @@
+function xr = biseccion( f,xl,xu,imax,es)
+f=inline(f);
+iter=1;
+ea=1;
+xr=0;
+fprintf('\n  iter       xl         xu           xr         ea  \n')
+while (iter<=imax)&&(ea>es)
+    xrold=xr;
+    xr=(xl+xu)/2;
+    
+    if xr~=0
+        ea=abs(((xr-xrold)/xr)*100);
+    end
+       fprintf('\n %2.0f \t %5.6f \t %5.6f \t %5.6f \t%5.6f \n ',iter,xl,xu,xr,ea)
+iter=iter+1;
+    R=f(xl)*f(xr);
+    
+    if R<0
+        xu=xr;
+    elseif R>0
+        xl=xr;
+    else
+        ea=0;
+        
+    end
+ 
+end

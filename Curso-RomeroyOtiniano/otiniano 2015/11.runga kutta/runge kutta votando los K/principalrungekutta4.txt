@@ -1,0 +1,41 @@
+clear all
+clc
+f=input('Ingrese el EDO: Dy/Dx=','s');
+f=inline(f,'x','y');
+format bank
+n=1;('Ingrese el numero de ecuaciones: ');
+y=input('Ingrese el valor dependiente inicial : ');
+xi=input('Ingrese el valor independiente inicial: ');
+xf=input('Ingrese el valor independiente final: ');
+dx=input('Ingrese el tamaño de paso: ');
+xout=input('Ingrese el intervalo de salida: ');
+x=xi;
+m=0;
+xp(m+1)=x;
+f2=dsolve('Dy= 4*exp(0.8*x)-0.5*y','y(0)=2','x');
+f2=inline(f2);
+yv=f2(x);
+fprintf('\n X         Yverdadero    YRK4       |et|(%%)         k1          k2          k3        k4 \n')
+fprintf('\n %3.5f %10.5f  %10.5f  \n ',x,yv,y)
+ 
+for i=1:n
+    yp(i,m+1)=y;
+end
+while x<xf
+    xend=x+xout;
+    if xend>xf
+        xend=xf;
+    end
+    h=dx;
+   [x,y,k1,k2,k3,k4]=IntegratorRungekutta4(f,x,y,n,h,xend);
+    m=m+1;
+    xp(m+1)=x;
+    
+    for i=1:n
+        yp(i,m+1)=y;
+    end
+    yv=f2(x);
+      et=abs(((yv-y)/yv))*100;
+    fprintf('\n %3.5f %10.5f  %10.5f %10.5f %10.5f %10.5f %10.5f %10.5f  \n ',x,yv,y,et,k1,k2,k3,k4)
+    
+    

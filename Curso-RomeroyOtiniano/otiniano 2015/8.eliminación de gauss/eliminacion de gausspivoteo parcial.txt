@@ -1,0 +1,78 @@
+function x=sustitucion(a,b,n)
+x(n)=b(n)/a(n,n);
+for i=n-1:-1:1
+    sum=0;
+    for j=i+1:n
+        sum=sum+a(i,j)*x(j);
+    end
+    x(i)=(b(i)-sum)/a(i,i);
+end
+end
+        
+--------------------------------------------------------
+function [a,b]=pivot(a,b,n,s,k)
+p=k;
+big=abs(a(k,k)/s(k));
+for z=k+1:n
+    t=abs(a(z,k)/s(z));
+    if t>big
+        big=t;
+        p=z;
+    end
+end
+if p~=k
+    for w=k:n
+        t=a(p,w);
+        a(p,w)=a(k,w);
+        a(k,w)=t;
+    end
+    t=b(p);
+    b(p)=b(k);
+    b(k)=t;
+    t=s(p);
+    s(p)=s(k);
+    s(k)=t;
+end    
+end
+---------------------------------------------------------------------------
+function [a,b,er,f]=eliminacion(a,b,n,tol,s,er)
+u=1;
+for k=1:n-1
+    [a,b]=pivot(a,b,n,s,k);
+    if abs(a(k,k)/s(k))<tol
+        er=-1;
+      break
+    end
+ for i=k+1:n
+    f(u)=a(i,k)/a(k,k);
+    for j=1:n
+        a(i,j)=a(i,j)-f(u)*a(k,j);
+    end
+    b(i)=b(i)-f(u)*b(k);
+    u=u+1;
+ end
+end
+if abs(a(n,n)/s(n))<tol 
+    er=-1;
+end
+      
+--------------------------------------------------------------------------
+function [a,b,x,f]=gauss(a,b,tol)
+er=0;
+n=length(b);
+s=zeros(1,n);
+for i=1:n
+    s(i)=abs(a(i,1));
+    for j=2:n
+        if abs(a(i,j))>s(i)
+            s(i)=abs(a(i,j));
+        end
+    end
+end
+[a,b,er,f]=eliminacion(a,b,n,tol,s,er);
+ if er~=-1
+ x=sustitucion(a,b,n);
+ end
+end
+-------------------------------------------------------------------------------
+[a,b,x,f]=gauss([3 -0.1 -0.2;0.1 7 -0.3;0.3 -0.2 10],[7.85 -19.3 71.4],0.0001)

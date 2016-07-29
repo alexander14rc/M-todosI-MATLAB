@@ -1,0 +1,6 @@
+function [x ynew  ] =euler(f,x,y,h)
+dydx=derivs(f,x,y);
+ynew=y+dydx*h;
+x=x+h;
+
+end

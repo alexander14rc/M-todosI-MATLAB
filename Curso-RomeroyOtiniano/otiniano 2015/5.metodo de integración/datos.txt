@@ -1,0 +1,3 @@
+trapezoide('Exp2',0,1,10)
+simpson3( 'Exp2',0,1,10)
+ simpson8( 'Exp2',0,1,9)

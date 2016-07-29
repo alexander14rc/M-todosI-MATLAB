@@ -1,0 +1,5 @@
+function p=Exp2(x);
+p=exp(-x*x/2);
+
+end
+

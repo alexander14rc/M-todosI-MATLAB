@@ -1,0 +1,23 @@
+function [X,Y]=WRK4(X,Y,n,h,EDO1,EDO2)
+[k1]=WDerivs(X,Y,EDO1,EDO2);
+for i=1:n
+    Ym(i)=Y(i)+ k1(i)*(h/2);
+end
+
+[k2]=WDerivs(X+h/2,Ym,EDO1,EDO2);
+for i=1:n
+    Ym(i)=Y(i)+ k2(i)*(h/2);
+end
+
+[k3]=WDerivs(X+h/2,Ym,EDO1,EDO2);
+for i=1:n
+    Ye(i)=Y(i)+ k3(i)*h;
+end
+
+[k4]=WDerivs(X+h,Ye,EDO1,EDO2);
+for i=1:n
+    slope(i)=(k1(i)+2*(k2(i)+k3(i))+k4(i))/6;
+    Y(i)=Y(i)+slope(i)*h;
+end
+
+X=X+h;

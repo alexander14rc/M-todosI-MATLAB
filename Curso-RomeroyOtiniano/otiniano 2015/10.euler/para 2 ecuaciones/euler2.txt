@@ -1,0 +1,7 @@
+function [x ynew  ynew2] =euler2(f,f2,x,y,y2,h)
+[dydx dydx2]=derivs2(f,f2,x,y,y2);
+ynew=y+dydx*h;
+ynew2=y2+dydx2*h;
+x=x+h;
+
+end

@@ -1,0 +1,68 @@
+%METODO GENERAL DE LA BISECCION SIGUIENDO EL PSEUDOCODIGO MNI
+%MENU PRINCIPAL CON FUNCIONES
+clear all
+close all
+clc
+format long;
+fprintf('\n**********ECUACION DE ESTADO DE REDLICH-KWONG*****************\n')
+% imax=input('ingrese numero maximo de iteraciones ');
+% xo=input('ingrese valor inicial ');
+% eps=input('ingrese criterio de convergencia eps');
+% eps1=input('ingrese criterio de exactiud eps1');
+imax=1000;
+xo=0.001;
+eps=0.00000001;
+eps1=0.0000001;
+I=1;
+fprintf('\n N°iter       xi                ea\n\n')
+ea=0;
+Pc=4600;
+Tc=191;
+%hp 0.0028037813 RPTA
+R=.518;
+T=233;
+P=65000;
+% [ a ] = a1(R,Tc,Pc);
+a=(0.42748)*(R^2*Tc^2.5)/Pc;
+% [ b ] = b1(R,Tc,Pc);
+b=0.08664*(R*Tc/Pc);
+syms x;
+f=R*T/(x-b)-a./(x*(x+b)*sqrt(T))-P;
+F=inline(f);
+dF=diff(F(x));
+DF=inline(dF);
+
+while (I<imax)
+   
+    fprintf('%3.0f        %3.9f        %3.9f\n',I,xo,ea)
+    x=xo-F(xo)/DF(xo);
+    ea=abs(x-xo)*100/x;
+        if abs(x-xo)<eps
+           x ;
+           fprintf('\n El criterio de salida es por criterio de convergencia \n')
+           break
+        end
+        if abs(F(x))<eps1
+           x;
+           fprintf('\n El criterio de salida es por criterio de exactitud \n')
+          break
+        end
+    I=I+1;
+    xo=x;
+    
+    
+end
+   
+
+if (I==imax)
+    fprintf('\n El metodo fracaso despues de %3.0f iteraciones',I)
+else
+    fprintf('\n El metodo tuvo exito despues de %3.0f iteraciones',I)
+    fprintf('\n')
+end
+
+fprintf('\n El volumen molar es %6.9f \n',x)
+
+volumen=100; %verificar este valor de volumen
+masa=volumen*x;
+fprintf('\n La masa es %5.8f \n',masa)

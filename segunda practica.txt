@@ -1,0 +1,163 @@
+clear all 
+close all 
+clc
+fx=input('Ingrese la funcion: ','s');
+syms x
+f=inline(fx);
+x0=input('Ingrese x0: ');
+x1=input('Ingrese x1: ');
+Eps=input('Ingrese el creiterio de convergencia: ');
+Eps1=input('Ingrese el criterio de exactitud: ');
+imax=input('Ingrese el maximo numero de iteraciones: ');
+I=1;
+while I<imax
+    x=x1-(f(x1)*(x1-x0))/(f(x1)-f(x0));
+    Ea=abs(x-x1);
+    if abs(x-x1)<Eps
+        fprintf('\n la raiz x es: %2.7f \n',x)
+        break
+    elseif abs(f(x))<Eps1
+        fprintf('\n la raiz x es: %2.7f \n',x)
+        break
+    end
+    x0=x1;
+    x1=x;
+    I=I+I;
+end
+if I>imax
+    fprintf('\n La raiz no converge\n')
+    break
+end
+fprintf('\n El error Ea: %2.7f \n',Ea)
+fprintf('\n El numero de iteraciones I: %i \n',I)
+
+*********************************************************
+x=input('vector x:');%[1 4 6 5 3 1.5 2.5 3.5]
+y=input('vector y:');%[0 1.3862944 1.7917595 1.6094379 1.0986123 0.4054641 0.9162907 1.2527630]
+x0=input('x0:');
+n=length(x);
+B=zeros(n);
+A(:,1)=y;
+for j=2:n
+    for i=1:(n+1)-j
+        A(i,j)=((A(i+1,j-1)-A(i,j-1))/(x(j+i-1)-x(i)));
+    end 
+end
+yint=B(1,:);
+Ea=B(1,:);
+xt=1;
+Ea(1)=0;
+yint(1)=A(1,1);
+for k=2:n
+    xt=xt*(x0-x(k-1));
+    yint2=yint(k-1)+A(1,k)*xt;
+    Ea(k)=yint2-yint(k-1);
+    yint(k)=yint2;
+end
+% fprintf('\n Grado    F(%2.2f)   Error \n',x0)...
+...for p=1:n
+...fprintf('\n  %i       %2.6f     %2.7f    \n',p-1,yint(p),Ea(p))
+...end
+fprintf('\n  f(%2.2f) = %5.6f \n',x0,yint2)
+fprintf('\n el Ea: %3.6f \n',Ea(n))
+
+*************************************************************
+x=input('vector x:');%[1 4 6 5 3 1.5 2.5 3.5]
+y=input('vector y:');%[0 1.3862944 1.7917595 1.6094379 1.0986123 0.4054641 0.9162907 1.2527630]
+x0=input('x0:');
+n=length(x);
+B=zeros(n);
+A(:,1)=y;
+for j=2:n
+    for i=1:(n+1)-j
+        A(i,j)=((A(i+1,j-1)-A(i,j-1))/(x(j+i-1)-x(i)));
+    end 
+end
+yint=B(1,:);
+Ea=B(1,:);
+xt=1;
+Ea(1)=0;
+yint(1)=A(1,1);
+for k=2:n
+    xt=xt*(x0-x(k-1));
+    yint2=yint(k-1)+A(1,k)*xt;
+    Ea(k)=yint2-yint(k-1);
+    yint(k)=yint2;
+end
+% fprintf('\n Grado    F(%2.2f)   Error \n',x0)...
+...for p=1:n
+...fprintf('\n  %i       %2.6f     %2.7f    \n',p-1,yint(p),Ea(p))
+...end
+fprintf('\n  f(%2.2f) = %5.6f \n',x0,yint2)
+fprintf('\n el Ea: %3.6f \n',Ea(n))
+t=1;
+for w=2:n
+    t=t*(x0-x(w-1));
+    if w==n
+        Rn=A(i,j)*t;
+    end
+end
+poly=A(1,1);
+v=1;
+syms x0
+for p=2:n
+    v=v*(x0-x(p-1));
+    poly=poly+A(1,p)*v;
+end
+polinomio=inline(poly);
+fprintf('\n El error de truncamiento Rn: %2.7f \n', abs(Rn))
+fprintf('\n La funciòn es: \n')
+disp(polinomio)
+
+*******************************************************************
+
+clear all
+clc
+disp('========================================')
+disp('         INTERPOLACION DE NEWTON        ')
+disp('========================================')
+x=input('ingresar los valores del vector x:');%[1 4 6 5]
+y=input('ingresar los valores del vector y(x):');%[0 1.386294 1.791759 1.609438]
+xo=input('ingresar el valor xo para interpolar :');
+n=length(x)-1;
+fdd=zeros(n,n);
+for i=1:n+1
+    fdd(i,1)=y(i);
+end
+for j=2:n+1
+    for i=1:(n+2)-j
+        fdd(i,j)=(fdd(i+1,j-1)-fdd(i,j-1))/(x(i+j-1)-x(i));
+    end
+end
+xt=1;
+yint(1)=fdd(1,1);% es el bo
+Ea(1)=0;
+%lo siguiente es para evaluar el xo en la funcion
+for k=2:n+1
+    xt=xt*(xo-x(k-1));
+    yint2=yint(k-1)+fdd(1,k)*xt;%acumula sumas para finalmente calcular F(x0)
+    Ea(k-1)=yint2-yint(k-1);
+    yint(k)=yint2;
+end
+%lo siguiente es para hallar el error de truncamiento
+v=1;
+for  k=1:n+1
+     v=v*(xo-x(k));
+     if k==n
+     Rn=fdd(i,j)*v;%Rn=bn*(x-x0)*(x-x1)*.....*(x-xn)
+     end
+end
+%para mostrar el polinomio
+p=fdd(1,1);
+syms x0
+t=1;
+for j=2:n+1
+    t=t*(x0-x(j-1));
+    p=p+fdd(1,j)*t;
+   
+end    
+p=inline(p);
+fprintf('\nla interpolacion para f(%1.0f)es :%5.6f\n',xo,yint2);
+fprintf('Error de truncamiento Rn:%5.6f\n',abs(Rn));
+fprintf('\nla funcion es :\n');
+disp(p)
